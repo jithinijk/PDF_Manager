@@ -84,23 +84,32 @@
         </div>
     </div>
 
+    <!-- Backup & Restore Sheet -->
     <div id="sheet-backup" class="fixed bottom-0 left-0 right-0 bg-white rounded-t-3xl z-50 sheet-hidden transition-transform duration-300 pb-[env(safe-area-inset-bottom)]">
         <div class="w-12 h-1.5 bg-slate-200 rounded-full mx-auto mt-3 mb-4"></div>
         <div class="px-6 pb-6"><h3 class="text-xl font-bold text-slate-800 mb-2">Backup & Restore</h3><div id="backup-progress-container" class="hidden mb-6"><div class="w-full bg-slate-200 rounded-full h-2.5"><div id="backup-bar" class="bg-blue-600 h-2.5 rounded-full transition-all duration-300" style="width: 0%"></div></div></div><div class="space-y-3"><button onclick="app.exportBackup()" id="btn-export" class="w-full flex items-center gap-3 p-4 bg-green-50 border border-green-200 rounded-xl text-left"><div class="w-10 h-10 rounded-full bg-green-500 text-white flex items-center justify-center"><i class="fa-solid fa-download"></i></div><div><h4 class="font-bold text-green-900">Export Zip</h4></div></button><div class="relative w-full"><input type="file" accept=".zip" class="absolute inset-0 w-full h-full opacity-0 z-10" onchange="app.importBackup(this)"><div class="w-full flex items-center gap-3 p-4 bg-blue-50 border border-blue-200 rounded-xl text-left"><div class="w-10 h-10 rounded-full bg-blue-500 text-white flex items-center justify-center"><i class="fa-solid fa-upload"></i></div><div><h4 class="font-bold text-blue-900">Import Zip</h4></div></div></div></div></div>
     </div>
 
-    <div id="sheet-sort" class="fixed bottom-0 left-0 right-0 bg-white rounded-t-3xl z-50 sheet-hidden transition-transform duration-300 pb-[env(safe-area-inset-bottom)]"><div class="w-12 h-1.5 bg-slate-200 rounded-full mx-auto mt-3 mb-4"></div><div class="px-6 pb-6"><h3 class="text-xl font-bold text-slate-800 mb-4">Sort By</h3><div class="space-y-2"><button onclick="app.applySort('year_desc')" class="sort-opt w-full text-left px-4 py-3 rounded-xl bg-slate-50 flex justify-between items-center"><span class="font-semibold text-slate-700">Year (Newest)</span><i class="fa-solid fa-check text-blue-600 opacity-0 sort-check" id="check-year_desc"></i></button><button onclick="app.applySort('year_asc')" class="sort-opt w-full text-left px-4 py-3 rounded-xl bg-slate-50 flex justify-between items-center"><span class="font-semibold text-slate-700">Year (Oldest)</span><i class="fa-solid fa-check text-blue-600 opacity-0 sort-check" id="check-year_asc"></i></button><button onclick="app.applySort('no_desc')" class="sort-opt w-full text-left px-4 py-3 rounded-xl bg-slate-50 flex justify-between items-center"><span class="font-semibold text-slate-700">File No (Desc)</span><i class="fa-solid fa-check text-blue-600 opacity-0 sort-check" id="check-no_desc"></i></button><button onclick="app.applySort('date_new')" class="sort-opt w-full text-left px-4 py-3 rounded-xl bg-slate-50 flex justify-between items-center"><span class="font-semibold text-slate-700">Date Added</span><i class="fa-solid fa-check text-blue-600 opacity-0 sort-check" id="check-date_new"></i></button></div></div></div>
+    <!-- Sort Sheet -->
+    <div id="sheet-sort" class="fixed bottom-0 left-0 right-0 bg-white rounded-t-3xl z-50 sheet-hidden transition-transform duration-300 pb-[env(safe-area-inset-bottom)]"><div class="w-12 h-1.5 bg-slate-200 rounded-full mx-auto mt-3 mb-4"></div><div class="px-6 pb-6"><h3 class="text-xl font-bold text-slate-800 mb-4">Sort By</h3><div class="space-y-2"><button onclick="app.applySort('year_desc')" class="sort-opt w-full text-left px-4 py-3 rounded-xl bg-slate-50 flex justify-between items-center"><span class="font-semibold text-slate-700">Year (Newest)</span><i class="fa-solid fa-check text-blue-600 opacity-0 sort-check" id="check-year_desc"></i></button><button onclick="app.applySort('year_asc')" class="sort-opt w-full text-left px-4 py-3 rounded-xl bg-slate-50 flex justify-between items-center"><span class="font-semibold text-slate-700">Year (Oldest)</span><i class="fa-solid fa-check text-blue-600 opacity-0 sort-check" id="check-year_asc"></i></button><button onclick="app.applySort('no_desc')" class="sort-opt w-full text-left px-4 py-3 rounded-xl bg-slate-50 flex justify-between items-center"><span class="font-semibold text-slate-700">File No (Desc)</span><i class="fa-solid fa-check text-blue-600 opacity-0 sort-check" id="check-no_desc"></i></button><button onclick="app.applySort('date_new')" class="sort-opt w-full text-left px-4 py-3 rounded-xl bg-slate-50 flex justify-between items-center"><span class="font-semibold text-slate-700">Doc Date (Newest)</span><i class="fa-solid fa-check text-blue-600 opacity-0 sort-check" id="check-date_new"></i></button></div></div></div>
     
-    <div id="sheet-upload" class="fixed bottom-0 left-0 right-0 bg-white rounded-t-3xl z-50 sheet-hidden transition-transform duration-300 max-h-[90vh] overflow-y-auto pb-[env(safe-area-inset-bottom)]"><div class="w-12 h-1.5 bg-slate-200 rounded-full mx-auto mt-3 mb-4"></div><div class="px-6 pb-6"><h3 class="text-xl font-bold text-slate-800 mb-6">Upload</h3><form onsubmit="event.preventDefault(); app.processUpload();" class="space-y-5"><div id="drop-zone" class="border-2 border-dashed border-slate-300 rounded-2xl h-32 flex flex-col items-center justify-center bg-slate-50 relative"><input type="file" id="file-input" accept=".pdf" class="absolute inset-0 w-full h-full opacity-0 z-10" onchange="app.handleFileSelect(this)"><div id="upload-icon" class="text-slate-400 text-3xl mb-2"><i class="fa-solid fa-cloud-arrow-up"></i></div><p id="upload-text" class="text-sm font-medium text-slate-500">Tap to select PDF</p></div><div class="flex gap-4"><div class="flex-1"><label class="text-xs font-bold text-slate-500 uppercase ml-1">File No</label><input type="text" id="inp-no" required class="w-full bg-slate-100 rounded-xl px-4 py-3 text-sm font-semibold outline-none" placeholder="101"></div><div class="flex-1"><label class="text-xs font-bold text-slate-500 uppercase ml-1">Year</label><input type="tel" id="inp-year" required class="w-full bg-slate-100 rounded-xl px-4 py-3 text-sm font-semibold outline-none" placeholder="2025"></div></div><div><label class="text-xs font-bold text-slate-500 uppercase ml-1">Type</label><select id="inp-type" class="w-full bg-slate-100 rounded-xl px-4 py-3 text-sm font-semibold outline-none appearance-none type-dropdown"></select></div><div><label class="text-xs font-bold text-slate-500 uppercase ml-1">Description</label><textarea id="inp-desc" rows="2" required class="w-full bg-slate-100 rounded-xl px-4 py-3 text-sm font-medium outline-none" placeholder="Details..."></textarea></div><button type="submit" id="btn-upload" class="w-full bg-blue-600 text-white rounded-xl py-4 font-bold text-lg shadow-lg active:scale-95 transition-transform flex justify-center items-center gap-2"><span>Save</span><div id="loader-upload" class="loader hidden"></div></button></form></div></div>
+    <!-- Upload Sheet -->
+    <div id="sheet-upload" class="fixed bottom-0 left-0 right-0 bg-white rounded-t-3xl z-50 sheet-hidden transition-transform duration-300 max-h-[90vh] overflow-y-auto pb-[env(safe-area-inset-bottom)]"><div class="w-12 h-1.5 bg-slate-200 rounded-full mx-auto mt-3 mb-4"></div><div class="px-6 pb-6"><h3 class="text-xl font-bold text-slate-800 mb-6">Upload</h3><form onsubmit="event.preventDefault(); app.processUpload();" class="space-y-5"><div id="drop-zone" class="border-2 border-dashed border-slate-300 rounded-2xl h-32 flex flex-col items-center justify-center bg-slate-50 relative"><input type="file" id="file-input" accept=".pdf" class="absolute inset-0 w-full h-full opacity-0 z-10" onchange="app.handleFileSelect(this)"><div id="upload-icon" class="text-slate-400 text-3xl mb-2"><i class="fa-solid fa-cloud-arrow-up"></i></div><p id="upload-text" class="text-sm font-medium text-slate-500">Tap to select PDF</p></div><div class="flex gap-4"><div class="flex-1"><label class="text-xs font-bold text-slate-500 uppercase ml-1">File No</label><input type="text" id="inp-no" required class="w-full bg-slate-100 rounded-xl px-4 py-3 text-sm font-semibold outline-none" placeholder="101"></div><div class="flex-1"><label class="text-xs font-bold text-slate-500 uppercase ml-1">Year</label><input type="tel" id="inp-year" required class="w-full bg-slate-100 rounded-xl px-4 py-3 text-sm font-semibold outline-none" placeholder="2025"></div></div>
+    <!-- Date Input Added Here -->
+    <div><label class="text-xs font-bold text-slate-500 uppercase ml-1">Doc Date</label><input type="date" id="inp-date" required class="w-full bg-slate-100 rounded-xl px-4 py-3 text-sm font-semibold outline-none"></div>
+    <div><label class="text-xs font-bold text-slate-500 uppercase ml-1">Type</label><select id="inp-type" class="w-full bg-slate-100 rounded-xl px-4 py-3 text-sm font-semibold outline-none appearance-none type-dropdown"></select></div><div><label class="text-xs font-bold text-slate-500 uppercase ml-1">Description</label><textarea id="inp-desc" rows="2" required class="w-full bg-slate-100 rounded-xl px-4 py-3 text-sm font-medium outline-none" placeholder="Details..."></textarea></div><button type="submit" id="btn-upload" class="w-full bg-blue-600 text-white rounded-xl py-4 font-bold text-lg shadow-lg active:scale-95 transition-transform flex justify-center items-center gap-2"><span>Save</span><div id="loader-upload" class="loader hidden"></div></button></form></div></div>
 
-    <div id="sheet-edit" class="fixed bottom-0 left-0 right-0 bg-white rounded-t-3xl z-50 sheet-hidden transition-transform duration-300 pb-[env(safe-area-inset-bottom)]"><div class="w-12 h-1.5 bg-slate-200 rounded-full mx-auto mt-3 mb-4"></div><div class="px-6 pb-6 space-y-4"><h3 class="text-xl font-bold text-slate-800 mb-4">Edit Details</h3><input type="hidden" id="edit-id"><div class="flex gap-4"><input type="text" id="edit-no" class="flex-1 bg-slate-100 rounded-xl px-4 py-3 text-sm font-semibold"><input type="tel" id="edit-year" class="flex-1 bg-slate-100 rounded-xl px-4 py-3 text-sm font-semibold"></div><select id="edit-type" class="w-full bg-slate-100 rounded-xl px-4 py-3 text-sm font-semibold type-dropdown"></select><textarea id="edit-desc" rows="3" class="w-full bg-slate-100 rounded-xl px-4 py-3 text-sm font-medium"></textarea><div class="flex gap-3 pt-2"><button onclick="app.deleteItem()" class="flex-1 bg-red-100 text-red-600 py-3 rounded-xl font-bold active:scale-95">Delete</button><button onclick="app.saveEdit()" class="flex-[2] bg-blue-600 text-white py-3 rounded-xl font-bold shadow-lg active:scale-95">Save</button></div></div></div>
+    <!-- Edit Sheet -->
+    <div id="sheet-edit" class="fixed bottom-0 left-0 right-0 bg-white rounded-t-3xl z-50 sheet-hidden transition-transform duration-300 pb-[env(safe-area-inset-bottom)]"><div class="w-12 h-1.5 bg-slate-200 rounded-full mx-auto mt-3 mb-4"></div><div class="px-6 pb-6 space-y-4"><h3 class="text-xl font-bold text-slate-800 mb-4">Edit Details</h3><input type="hidden" id="edit-id"><div class="flex gap-4"><input type="text" id="edit-no" class="flex-1 bg-slate-100 rounded-xl px-4 py-3 text-sm font-semibold"><input type="tel" id="edit-year" class="flex-1 bg-slate-100 rounded-xl px-4 py-3 text-sm font-semibold"></div>
+    <!-- Edit Date Input -->
+    <div><label class="text-xs font-bold text-slate-500 uppercase ml-1">Doc Date</label><input type="date" id="edit-date" class="w-full bg-slate-100 rounded-xl px-4 py-3 text-sm font-semibold"></div>
+    <select id="edit-type" class="w-full bg-slate-100 rounded-xl px-4 py-3 text-sm font-semibold type-dropdown"></select><textarea id="edit-desc" rows="3" class="w-full bg-slate-100 rounded-xl px-4 py-3 text-sm font-medium"></textarea><div class="flex gap-3 pt-2"><button onclick="app.deleteItem()" class="flex-1 bg-red-100 text-red-600 py-3 rounded-xl font-bold active:scale-95">Delete</button><button onclick="app.saveEdit()" class="flex-[2] bg-blue-600 text-white py-3 rounded-xl font-bold shadow-lg active:scale-95">Save</button></div></div></div>
 
     <div id="sheet-types" class="fixed bottom-0 left-0 right-0 bg-white rounded-t-3xl z-50 sheet-hidden transition-transform duration-300 h-[85vh] flex flex-col pb-[env(safe-area-inset-bottom)]"><div class="w-12 h-1.5 bg-slate-200 rounded-full mx-auto mt-3 mb-4 shrink-0"></div><div class="px-6 pb-4 shrink-0"><h3 class="text-xl font-bold text-slate-800">Manage Types</h3><form onsubmit="event.preventDefault(); app.addType();" class="flex gap-2 mt-4"><input type="text" id="new-type-name" class="flex-1 bg-slate-100 rounded-xl px-4 py-3 text-sm font-semibold outline-none" placeholder="New Type Name" required><button type="submit" class="bg-blue-600 text-white px-5 rounded-xl font-bold active:scale-95">Add</button></form></div><div class="flex-1 overflow-y-auto px-6 pb-6 space-y-2" id="types-list"></div></div>
 
     <script>
-        // Register Service Worker for PWA capabilities
+        // Register Service Worker
         if ('serviceWorker' in navigator) {
-            // Only register SW if protocol is http or https (prevents errors in blob/file previews)
             if (window.location.protocol.startsWith('http')) {
                 navigator.serviceWorker.register('./sw.js')
                     .then(reg => console.log('SW Registered!', reg))
@@ -108,7 +117,7 @@
             }
         }
 
-        // Install Prompt Logic
+        // Install Prompt
         let deferredPrompt;
         window.addEventListener('beforeinstallprompt', (e) => {
             e.preventDefault();
@@ -116,7 +125,7 @@
             document.getElementById('pwa-install-btn').classList.remove('hidden');
         });
 
-        // App Logic (Same as V5)
+        // App Logic
         const db={conn:null,async init(){return new Promise(e=>{const t=indexedDB.open("AntigravityDB",1);t.onupgradeneeded=e=>{e.target.result.objectStoreNames.contains("files")||e.target.result.createObjectStore("files")},t.onsuccess=t=>{this.conn=t.target.result,e()}})},async save(e,t){const n=this.conn.transaction(["files"],"readwrite");n.objectStore("files").put(t,e);return new Promise(e=>n.oncomplete=e)},async get(e){return new Promise(t=>{this.conn.transaction(["files"],"readonly").objectStore("files").get(e).onsuccess=e=>t(e.target.result)})},async del(e){const t=this.conn.transaction(["files"],"readwrite");t.objectStore("files").delete(e);return new Promise(e=>t.oncomplete=e)},async clear(){const e=this.conn.transaction(["files"],"readwrite");e.objectStore("files").clear();return new Promise(t=>e.oncomplete=t)},async getAllKeys(){return new Promise(e=>{this.conn.transaction(["files"],"readonly").objectStore("files").getAllKeys().onsuccess=t=>e(t.target.result)})}};
         
         const app = {
@@ -125,6 +134,10 @@
                 const storedMeta = localStorage.getItem('AntigravityMeta_v5'); if (storedMeta) this.data = JSON.parse(storedMeta);
                 const storedTypes = localStorage.getItem('AntigravityTypes_v5'); this.types = storedTypes ? JSON.parse(storedTypes) : ["Document", "Personal", "Work"]; 
                 this.filterType = localStorage.getItem('AntigravityFilter') || 'All'; this.sortMode = localStorage.getItem('AntigravitySort') || 'year_desc';
+                
+                // Set default date to today for upload form
+                document.getElementById('inp-date').valueAsDate = new Date();
+                
                 await db.init(); this.renderUI();
             },
             installPWA() {
@@ -152,7 +165,7 @@
                         case 'year_asc': return (a.year - b.year) || a.no.localeCompare(b.no, undefined, {numeric:true});
                         case 'no_asc': return a.no.localeCompare(b.no, undefined, {numeric:true});
                         case 'no_desc': return b.no.localeCompare(a.no, undefined, {numeric:true});
-                        case 'date_new': return b.date - a.date;
+                        case 'date_new': return new Date(b.docDate) - new Date(a.docDate);
                         default: return b.year - a.year;
                     }
                 });
@@ -161,7 +174,8 @@
                 emptyEl.classList.add('hidden');
                 list.forEach(item => {
                     const el = document.createElement('div'); el.className = "bg-white p-4 rounded-2xl shadow-sm border border-slate-200/60 active:scale-[0.98] transition-transform"; el.onclick = (e) => { if(!e.target.closest('.action-btn')) this.openFile(item.id); };
-                    el.innerHTML = `<div class="flex justify-between items-start mb-2"><div class="flex gap-2"><span class="bg-blue-100 text-blue-700 text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded-md">${item.type}</span><span class="bg-slate-100 text-slate-600 text-[10px] font-bold px-2 py-1 rounded-md">#${item.no}</span></div><button onclick="app.prepEdit('${item.id}')" class="action-btn text-slate-300 hover:text-blue-600 p-2 -mr-2 -mt-2"><i class="fa-solid fa-ellipsis"></i></button></div><div class="flex items-center gap-4"><div class="w-10 h-10 rounded-lg bg-red-50 text-red-500 flex items-center justify-center text-xl shrink-0"><i class="fa-solid fa-file-pdf"></i></div><div class="min-w-0 flex-1"><h4 class="font-bold text-slate-800 text-sm truncate leading-tight">${item.name}</h4><p class="text-xs text-slate-500 mt-0.5 line-clamp-1">${item.desc}</p></div></div><div class="mt-3 pt-3 border-t border-slate-50 flex justify-between items-center text-[10px] text-slate-400 font-medium"><span>${item.year}</span><span>${new Date(item.date).toLocaleDateString()}</span></div>`;
+                    // Updated HTML to show docDate instead of upload date
+                    el.innerHTML = `<div class="flex justify-between items-start mb-2"><div class="flex gap-2"><span class="bg-blue-100 text-blue-700 text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded-md">${item.type}</span><span class="bg-slate-100 text-slate-600 text-[10px] font-bold px-2 py-1 rounded-md">#${item.no}</span></div><button onclick="app.prepEdit('${item.id}')" class="action-btn text-slate-300 hover:text-blue-600 p-2 -mr-2 -mt-2"><i class="fa-solid fa-ellipsis"></i></button></div><div class="flex items-center gap-4"><div class="w-10 h-10 rounded-lg bg-red-50 text-red-500 flex items-center justify-center text-xl shrink-0"><i class="fa-solid fa-file-pdf"></i></div><div class="min-w-0 flex-1"><h4 class="font-bold text-slate-800 text-sm truncate leading-tight">${item.name}</h4><p class="text-xs text-slate-500 mt-0.5 line-clamp-1">${item.desc}</p></div></div><div class="mt-3 pt-3 border-t border-slate-50 flex justify-between items-center text-[10px] text-slate-400 font-medium"><span>${item.year}</span><span>${new Date(item.docDate).toLocaleDateString()}</span></div>`;
                     listEl.appendChild(el);
                 });
             },
@@ -217,19 +231,46 @@
                 document.getElementById('btn-upload').disabled = true;
                 try {
                     const id = crypto.randomUUID(); const text = await this.extractText(this.tempFile); await db.save(id, this.tempFile);
-                    this.data.unshift({id, name: this.tempFile.name, no: document.getElementById('inp-no').value, year: parseInt(document.getElementById('inp-year').value), type: document.getElementById('inp-type').value, desc: document.getElementById('inp-desc').value, content: text, date: Date.now()});
+                    // Add docDate from input
+                    const docDate = document.getElementById('inp-date').value || new Date().toISOString().split('T')[0];
+                    this.data.unshift({id, name: this.tempFile.name, no: document.getElementById('inp-no').value, year: parseInt(document.getElementById('inp-year').value), type: document.getElementById('inp-type').value, desc: document.getElementById('inp-desc').value, docDate: docDate, content: text, date: Date.now()});
                     this.saveMeta(); this.renderUI(); this.closeAllSheets();
                 } catch(e) { alert(e.message); } document.getElementById('btn-upload').disabled = false;
             },
             async extractText(file) { const buff = await file.arrayBuffer(); const pdf = await pdfjsLib.getDocument({data: buff}).promise; let str = ""; for(let i=1; i<=Math.min(pdf.numPages,5); i++) str += (await (await pdf.getPage(i)).getTextContent()).items.map(s=>s.str).join(" "); return str.substring(0,3000); },
             async openFile(id) { try { const blob = await db.get(id); if(blob) window.open(URL.createObjectURL(blob)); } catch(e) {} },
-            prepEdit(id) { const i = this.data.find(x => x.id === id); if(!i) return; document.getElementById('edit-id').value = id; document.getElementById('edit-no').value = i.no; document.getElementById('edit-year').value = i.year; document.getElementById('edit-type').value = i.type; document.getElementById('edit-desc').value = i.desc; this.openSheet('edit'); },
-            saveEdit() { const id = document.getElementById('edit-id').value; const i = this.data.find(x => x.id === id); if(i) { i.no = document.getElementById('edit-no').value; i.year = parseInt(document.getElementById('edit-year').value); i.type = document.getElementById('edit-type').value; i.desc = document.getElementById('edit-desc').value; this.saveMeta(); this.renderUI(); this.closeAllSheets(); } },
+            prepEdit(id) { 
+                const i = this.data.find(x => x.id === id); if(!i) return; 
+                document.getElementById('edit-id').value = id; 
+                document.getElementById('edit-no').value = i.no; 
+                document.getElementById('edit-year').value = i.year; 
+                document.getElementById('edit-type').value = i.type; 
+                document.getElementById('edit-desc').value = i.desc; 
+                // Set Edit Date
+                document.getElementById('edit-date').value = i.docDate || new Date(i.date).toISOString().split('T')[0];
+                this.openSheet('edit'); 
+            },
+            saveEdit() { 
+                const id = document.getElementById('edit-id').value; const i = this.data.find(x => x.id === id); 
+                if(i) { 
+                    i.no = document.getElementById('edit-no').value; 
+                    i.year = parseInt(document.getElementById('edit-year').value); 
+                    i.type = document.getElementById('edit-type').value; 
+                    i.desc = document.getElementById('edit-desc').value; 
+                    i.docDate = document.getElementById('edit-date').value;
+                    this.saveMeta(); this.renderUI(); this.closeAllSheets(); 
+                } 
+            },
             async deleteItem() { if(confirm("Delete?")) { const id = document.getElementById('edit-id').value; await db.del(id); this.data = this.data.filter(x => x.id !== id); this.saveMeta(); this.renderUI(); this.closeAllSheets(); } },
             openSheet(id) { document.getElementById('backdrop').classList.replace('backdrop-hidden', 'backdrop-visible'); document.getElementById(`sheet-${id}`).classList.replace('sheet-hidden', 'sheet-visible'); },
             switchSheet(id) { document.querySelectorAll('[id^="sheet-"]').forEach(el => el.classList.replace('sheet-visible', 'sheet-hidden')); document.getElementById(`sheet-${id}`).classList.replace('sheet-hidden', 'sheet-visible'); },
             closeAllSheets() { document.getElementById('backdrop').classList.replace('backdrop-visible', 'backdrop-hidden'); document.querySelectorAll('[id^="sheet-"]').forEach(el => el.classList.replace('sheet-visible', 'sheet-hidden')); setTimeout(()=>this.resetUpload(), 300); },
-            resetUpload() { document.querySelector('form').reset(); this.tempFile = null; document.getElementById('upload-text').textContent = "Tap to select PDF"; },
+            resetUpload() { 
+                document.querySelector('form').reset(); 
+                this.tempFile = null; 
+                document.getElementById('upload-text').textContent = "Tap to select PDF"; 
+                document.getElementById('inp-date').valueAsDate = new Date(); // Reset date to today
+            },
             handleFileSelect(input) { if (input.files[0]) { this.tempFile = input.files[0]; document.getElementById('upload-text').textContent = this.tempFile.name; const m = this.tempFile.name.match(/(19|20)\d{2}/); if(m && !document.getElementById('inp-year').value) document.getElementById('inp-year').value = m[0]; } },
             saveMeta() { localStorage.setItem('AntigravityMeta_v5', JSON.stringify(this.data)); }
         };
